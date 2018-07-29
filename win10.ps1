@@ -1,8 +1,4 @@
-﻿##### SAVE ##########
-##### SAVE ##########
-##### SAVE ##########
-
-## vars ##
+﻿## Vars ##
 $hostname = hostname
 
 ##########
@@ -12,7 +8,7 @@ $Path = $env:TEMP; $Installer = "chrome_installer.exe"; `
     Invoke-WebRequest "http://dl.google.com/chrome/install/375.126/chrome_installer.exe" `
     -OutFile $Path\$Installer; Start-Process -FilePath $Path\$Installer -Args "/silent /install" `
     -Verb RunAs -Wait; Remove-Item $Path\$Installer
-    
+
 # Install Firefox browser
 $Path = $env:TEMP; $Installer = "Firefox Setup 51.0.1.exe"; `
     Invoke-WebRequest "https://download.mozilla.org/?product=firefox-stub&os=win&lang=en-US" `
@@ -20,21 +16,24 @@ $Path = $env:TEMP; $Installer = "Firefox Setup 51.0.1.exe"; `
     -Verb RunAs -Wait; Remove-Item $Path\$Installer
 
 
-
-# Install Adobe Reader
-$Path = $env:TEMP; $Installer = "adobeDC.exe"; `
-    Invoke-WebRequest "http://ardownload.adobe.com/pub/adobe/reader/win/AcrobatDC/1502320053/AcroRdrDC1502320053_en_US.exe" `
-    -OutFile $Path\$Installer; Start-Process -FilePath $Path\$Installer -Args "/silent /install" `
-    -Verb RunAs -Wait; Remove-Item $Path\$Installer
-
-
 # Uninstall Unnecessary Packages
-$useless = "Microsoft.BingNews"
+$useless = @(
+    "Microsoft.BingNews"
+    "Microsoft.BingFinance"
+    "Microsoft.BingNews"
+    "Microsoft.BingSports"
+    "Microsoft.BingWeather"
+    "Microsoft.ZuneMusic"  
+    "Microsoft.MicrosoftOfficeHub"
+    "king.com.CandyCrushSodaSaga"  
+    "Microsoft.People"
+)
+     
+foreach ($app in $useless) {
 
+Write-Output "Removing $app"
+get-appxpackage $app | remove-appxpackage
 
-foreach ($i in $useless)
-{
-get-appxpackage $i | remove-appxpackage
 }
 
 # Reduce Cortana Search bar size
