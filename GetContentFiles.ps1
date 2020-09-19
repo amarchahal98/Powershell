@@ -1,6 +1,6 @@
 # Checking for Remote Desktop enabled Machines in LT Uploads
 
-$files = Get-Item -Path 'L:\Company\*\RDPTrue.txt'
+$files = Get-Item -Path 'F:\Company\*\RDPTrue.txt'
 
 foreach ($file in $files)
 {
